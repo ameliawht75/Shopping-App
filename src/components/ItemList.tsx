@@ -1,4 +1,4 @@
-//List the items as they are created.  For future would like to do this based on categories like product, dairy, deli, etc.
+//List the items as they are created following those in the data.ts file.  For future would like to do this based on categories like product, dairy, deli, etc.
 
 import ItemCard from './ItemCard';
 
@@ -12,7 +12,7 @@ interface Item {
 interface Props {
   items: Item[];
   deleteItem: (id: number) => void;
-  editItem: (item: Item) => void;  // Pass the edit function down
+  editItem: (item: Item) => void; 
 }
 
 function ItemList({ items, deleteItem, editItem }: Props) {

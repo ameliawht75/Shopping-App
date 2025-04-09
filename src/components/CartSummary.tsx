@@ -1,4 +1,6 @@
-//Gives a total price of the items.  In future would like to add sales tax.
+//Gives a total price of the items.  
+// In future would like to add sales tax.  Will need a function that allows user to add sales tax based on location and add it to the total.
+
 interface Props {
     items: { id: number, name: string, price: number, quantity: number }[];
   }

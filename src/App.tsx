@@ -50,7 +50,6 @@ function App() {
     <div className="container-fluid mt-4">
       <Header />
       <div className="row">
-        {/* Sidebar Component */}
         <Sidebar
           newItem={newItem}
           setNewItem={setNewItem}
@@ -58,8 +57,6 @@ function App() {
           updateItem={updateItem}
           editingItem={editingItem}
         />
-        
-        {/* Main content (Right side) */}
         <div className="col-md-8 col-lg-9">
           <ItemList items={items} deleteItem={deleteItem} editItem={editItem} />
           <CartSummary items={items} />
