@@ -1,0 +1,10 @@
+/* Sidebar Styling */
+.sidebar {
+  background-color: palevioletred;
+  border-right: 1px solid #ddd;
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
+  padding-top: 20px;
+}
+
