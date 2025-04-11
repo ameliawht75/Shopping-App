@@ -2,7 +2,7 @@
 //Confirm delete and edit pop-up still needed.
 //If I can get the category idea to work will add that to the card as well depending on cosmetics.
 
-interface Item {
+export interface Item {
     id: number;
     name: string;
     price: number;
@@ -11,8 +11,8 @@ interface Item {
   
   interface Props {
     item: Item;
-    deleteItem: (id: number) => void;
-    editItem: (item: Item) => void;  // Receive edit function
+    deleteItem: (id: number) => void; //Delete function reciever
+    editItem: (item: Item) => void;  //Edit function reciever
   }
   
   function ItemCard({ item, deleteItem, editItem }: Props) {
@@ -22,18 +22,6 @@ interface Item {
           <h5 className="card-title">{item.name}</h5>
           <p className="card-text">Price: ${item.price}</p>
           <p className="card-text">Quantity: {item.quantity}</p>
-          <button
-            className="btn btn-danger"
-            onClick={() => deleteItem(item.id)}  // Delete button
-          >
-            Delete
-          </button>
-          <button
-            className="btn btn-warning ms-2"
-            onClick={() => editItem(item)}  // Edit button
-          >
-            Edit
-          </button>
         </div>
       </div>
     );

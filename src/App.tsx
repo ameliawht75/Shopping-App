@@ -1,18 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react'; //This came from a couple YouTube tutorials.
 import { items as initialItems } from './data';
 import Header from './components/Header';
 import ItemList from './components/ItemList';
 import CartSummary from './components/CartSummary';
-import Sidebar from './components/Sidebar';  
+import type { Item } from './components/ItemCard'; //I am using this to manage the items being added and edited.
 
-interface Item {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-}
-
-function App() {
+function App() { //integrated useState here to manage items being added and edited.
   const [items, setItems] = useState<Item[]>(initialItems);
   const [newItem, setNewItem] = useState<Item>({ id: 0, name: '', price: 0, quantity: 1 });
   const [editingItem, setEditingItem] = useState<Item | null>(null);
@@ -50,13 +43,6 @@ function App() {
     <div className="container-fluid mt-4">
       <Header />
       <div className="row">
-        <Sidebar
-          newItem={newItem}
-          setNewItem={setNewItem}
-          addItem={addItem}
-          updateItem={updateItem}
-          editingItem={editingItem}
-        />
         <div className="col-md-8 col-lg-9">
           <ItemList items={items} deleteItem={deleteItem} editItem={editItem} />
           <CartSummary items={items} />

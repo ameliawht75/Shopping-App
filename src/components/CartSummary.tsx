@@ -5,12 +5,18 @@ interface Props {
     items: { id: number, name: string, price: number, quantity: number }[];
   }
   
+  /*function calculateTax (price, quantity) {
+    var salesTax = 0.06; //Sales tax in my state
+    var totalPrice = (price * quantity) * (1 + salesTax);;
+    return totalPrice;
+  }*/
+
   const CartSummary = ({ items }: Props) => {
     const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   
     return (
       <div className="mt-4 text-end fw-bold">
-        Total: ${total.toFixed(2)}
+        Shopping Total: ${total.toFixed(2)}
       </div>
     );
   };
