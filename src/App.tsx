@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { items as testItems, Item } from './data';
+import { items as testItems, Item } from './data'; //Red line but will works.
 import ItemList from './components/ItemList';
 import Sidebar from './components/Sidebar';
-import CartSummary from './components/CartSummary';
+import CartSummary from './components/CartSummary'; //Yellow but still works.
 
 function App() {
   const [items, setItems] = useState<Item[]>(testItems);

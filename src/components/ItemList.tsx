@@ -1,4 +1,7 @@
-import { Item } from '../data';
+//Would like to return to list format that I had last week.
+//Try to get this to sort based on category of product (produce, dairy, etc.)
+
+import { Item } from '../data'; //Has a red line but still works.
 
 interface ItemListProps {
   items: Item[];

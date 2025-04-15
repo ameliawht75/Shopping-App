@@ -1,4 +1,4 @@
-//Creates a card for each item that shows name, price, and quantity.  Added the delete and edit buttons here for simplicity. 
+//Creates a card for each item that shows name, price, and quantity.  Added the delete, purchased, and edit buttons here for simplicity. 
 //Confirm delete and edit pop-up still needed.
 //If I can get the category idea to work will add that to the card as well depending on cosmetics.
 
@@ -16,7 +16,7 @@ interface Props {
   editItem: (item: Item) => void;  //Edit function reciever
 }
 
-function ItemCard({ item, deleteItem, editItem }: Props) {
+function ItemCard({ item, deleteItem, editItem }: Props) {//Leftovers from when I got ahead on project.  Going to leave since they don't hurt anything and may be used later.
   return (
     <div className="card mb-3">
       <div className="card-body">
