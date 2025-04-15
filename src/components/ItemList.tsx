@@ -1,35 +1,54 @@
-//List the items as they are created following those in the data.ts file.  For future would like to do this based on categories like product, dairy, deli, etc.
+import { Item } from '../data';
 
-
-import ItemCard from './ItemCard';
-
-
-interface Item {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-}
-
-
-interface Props {
+interface ItemListProps {
   items: Item[];
-  deleteItem: (id: number) => void;
-  editItem: (item: Item) => void;
+  onDelete: (id: number) => void;
+  onTogglePurchased: (id: number) => void;
+  total: number;
 }
 
-
-function ItemList({ items, deleteItem, editItem }: Props) {
+const ItemList = ({ items, onDelete, onTogglePurchased, total }: ItemListProps) => {
   return (
-    <div className="mt-4">
-      {items.map((item) => (
-        <ItemCard key={item.id} item={item} deleteItem={deleteItem} editItem={editItem} />
+    <div className="row">
+      {items.map(item => (
+        <div key={item.id} className="col-md-4 mb-3">
+          <div className="card">
+            <div className="card-body">
+              <h5
+                className={`card-title ${
+                  item.purchased ? 'text-muted text-decoration-line-through' : ''
+                }`}
+              >
+                {item.name}
+              </h5>
+              <p className="card-text">Price: ${item.price.toFixed(2)}</p>
+              <p className="card-text">Quantity: {item.quantity}</p>
+              <button
+                className={`btn me-2 ${
+                  item.purchased ? 'btn-success' : 'btn-outline-primary'
+                }`}
+                onClick={() => onTogglePurchased(item.id)}
+              >
+                {item.purchased ? 'Purchased' : 'Mark as Purchased'}
+              </button>
+              <button
+                className="btn btn-danger"
+                onClick={() => onDelete(item.id)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
       ))}
+      <div className="col-12 mt-4">
+        <h4>Total: ${total.toFixed(2)}</h4>
+      </div>
     </div>
   );
-}
-
+};
 
 export default ItemList;
+
 
 

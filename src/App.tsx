@@ -1,58 +1,57 @@
-import { useState } from 'react'; //This came from a couple YouTube tutorials.
-import { items as initialItems } from './data';
-import Header from './components/Header';
+import { useState } from 'react';
+import { items as testItems, Item } from './data';
 import ItemList from './components/ItemList';
+import Sidebar from './components/Sidebar';
 import CartSummary from './components/CartSummary';
-import type { Item } from './components/ItemCard'; //I am using this to manage the items being added and edited.
 
-function App() { //integrated useState here to manage items being added and edited.
-  const [items, setItems] = useState<Item[]>(initialItems);
-  const [newItem, setNewItem] = useState<Item>({ id: 0, name: '', price: 0, quantity: 1 });
-  const [editingItem, setEditingItem] = useState<Item | null>(null);
+function App() {
+  const [items, setItems] = useState<Item[]>(testItems);
 
-  const addItem = (event: React.FormEvent) => {
-    event.preventDefault(); 
-
-    if (newItem.name && newItem.price > 0) {
-      const newId = items.length ? Math.max(...items.map((item) => item.id)) + 1 : 1;
-      setItems([...items, { ...newItem, id: newId }]);
-      setNewItem({ id: 0, name: '', price: 0, quantity: 1 });
-    }
+  const addItem = () => {
+    const newId = items.length ? Math.max(...items.map(i => i.id)) + 1 : 1;
+    const newItem: Item = {
+      id: newId,
+      name: 'New Product',
+      price: 19.99,
+      quantity: 1,
+      purchased: false
+    };
+    setItems([...items, newItem]);
   };
 
   const deleteItem = (id: number) => {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    setItems(items.filter(item => item.id !== id));
   };
 
-  const editItem = (item: Item) => {
-    setEditingItem(item);
-    setNewItem(item);
+  const togglePurchased = (id: number) => {
+    const updatedItems = items.map(item =>
+      item.id === id ? { ...item, purchased: !item.purchased } : item
+    );
+    setItems(updatedItems);
   };
 
-  const updateItem = (event: React.FormEvent) => {
-    event.preventDefault(); 
-
-    if (newItem.name && newItem.price > 0) {
-      setItems(items.map((item) => (item.id === newItem.id ? newItem : item)));
-      setEditingItem(null);
-      setNewItem({ id: 0, name: '', price: 0, quantity: 1 });
-    }
-  };
+  const total = items.reduce((sum, item) => {
+    return sum + item.price * item.quantity;
+  }, 0);
 
   return (
-    <div className="container-fluid mt-4">
-      <Header />
-      <div className="row">
-        <div className="col-md-8 col-lg-9">
-          <ItemList items={items} deleteItem={deleteItem} editItem={editItem} />
-          <CartSummary items={items} />
-        </div>
+    <div className="d-flex">
+      <Sidebar onAddItem={addItem} />
+      <div className="container mt-4">
+        <h1>Shopping Cart</h1>
+        <ItemList
+          items={items}
+          onDelete={deleteItem}
+          onTogglePurchased={togglePurchased}
+          total={total}
+        />
       </div>
     </div>
   );
 }
 
 export default App;
+
 
 
 
