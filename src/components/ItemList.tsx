@@ -3,11 +3,11 @@ import { Item } from '../data';
 interface ItemListProps {
   items: Item[];
   onDelete: (id: number) => void;
-  onTogglePurchased: (id: number) => void;
+  onPurchased: (id: number) => void;
   total: number;
 }
 
-const ItemList = ({ items, onDelete, onTogglePurchased, total }: ItemListProps) => {
+const ItemList = ({ items, onDelete, onPurchased, total }: ItemListProps) => {
   return (
     <div className="row">
       {items.map(item => (
@@ -27,7 +27,7 @@ const ItemList = ({ items, onDelete, onTogglePurchased, total }: ItemListProps) 
                 className={`btn me-2 ${
                   item.purchased ? 'btn-success' : 'btn-outline-primary'
                 }`}
-                onClick={() => onTogglePurchased(item.id)}
+                onClick={() => onPurchased(item.id)}
               >
                 {item.purchased ? 'Purchased' : 'Mark as Purchased'}
               </button>

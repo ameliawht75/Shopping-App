@@ -23,7 +23,7 @@ function App() {
     setItems(items.filter(item => item.id !== id));
   };
 
-  const togglePurchased = (id: number) => {
+  const onPurchased = (id: number) => {
     const updatedItems = items.map(item =>
       item.id === id ? { ...item, purchased: !item.purchased } : item
     );
@@ -42,7 +42,7 @@ function App() {
         <ItemList
           items={items}
           onDelete={deleteItem}
-          onTogglePurchased={togglePurchased}
+          onPurchased={onPurchased}
           total={total}
         />
       </div>
