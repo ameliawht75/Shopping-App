@@ -1,50 +1,62 @@
 import { useState } from 'react';
-import { items as testItems, Item } from './data'; //Red line but will works.
+import { items as testItems } from './data'; //Red line but will works.
 import ItemList from './components/ItemList';
 import Sidebar from './components/Sidebar';
 import CartSummary from './components/CartSummary'; //Yellow but still works.
+import { Item } from './components/ItemCard';
 
 function App() {
   const [items, setItems] = useState<Item[]>(testItems);
+  const [editingItem, setEditingItem] = useState<Item | null>(null);
 
-  const addItem = () => {
-    const newId = items.length ? Math.max(...items.map(i => i.id)) + 1 : 1;
-    const newItem: Item = {
-      id: newId,
-      name: 'New Product',
-      price: 19.99,
-      quantity: 1,
-      purchased: false
-    };
-    setItems([...items, newItem]);
-  };
+  function handleSubmit(data: Omit<Item, 'id' | 'purchased'>, editingId?: number) {
+    if (editingId) {
+      const updated = items.map(item =>
+        item.id === editingId ? { ...item, ...data } : item
+      );
+      setItems(updated);
+      setEditingItem(null);
+    } else {
+      const newItem: Item = {
+        id: Date.now(),
+        name: data.name,
+        price: data.price,
+        quantity: data.quantity,
+        purchased: false,
+      };
+      setItems([...items, newItem]);
+    }
+  }
 
-  const deleteItem = (id: number) => {
+  function deleteItem(id: number) {
     setItems(items.filter(item => item.id !== id));
-  };
+  }
 
-  const onPurchased = (id: number) => {
-    const updatedItems = items.map(item =>
+  function onPurchased(id: number) {
+    const updated = items.map(item =>
       item.id === id ? { ...item, purchased: !item.purchased } : item
     );
-    setItems(updatedItems);
-  };
+    setItems(updated);
+  }
 
-  const total = items.reduce((sum, item) => {
-    return sum + item.price * item.quantity;
-  }, 0);
+  /*function startEditing(item: Item) {
+    setEditingItem(item);
+  }*/
+
+  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <div className="d-flex">
-      <Sidebar onAddItem={addItem} />
-      <div className="container mt-4">
-        <h1>Shopping Cart</h1>
+    <div style={{ display: 'flex' }}>
+      <Sidebar onSubmit={handleSubmit} editingItem={editingItem} />
+      <div style={{ padding: '1rem' }}>
+        <h2>Grocery List</h2>
         <ItemList
           items={items}
           onDelete={deleteItem}
           onPurchased={onPurchased}
-          total={total}
-        />
+          //onEdit={startEditing}
+          />
+        <CartSummary total={total}/>
       </div>
     </div>
   );

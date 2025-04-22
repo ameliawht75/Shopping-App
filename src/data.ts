@@ -6,3 +6,4 @@ export const items = [
     { id: 3, name: "Ice Cream", price: 8.00, quantity: 1, purchased: false },
   ];
   
+  export default items;

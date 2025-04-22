@@ -1,16 +1,15 @@
 //Would like to return to list format that I had last week.
 //Try to get this to sort based on category of product (produce, dairy, etc.)
 
-import { Item } from '../data'; //Has a red line but still works.
+import { items } from '../data'; //Has a red line but still works.
 
 interface ItemListProps {
-  items: Item[];
+  items: item[];
   onDelete: (id: number) => void;
   onPurchased: (id: number) => void;
-  total: number;
 }
 
-const ItemList = ({ items, onDelete, onPurchased, total }: ItemListProps) => {
+const ItemList = ({ items, onDelete, onPurchased,}: ItemListProps) => {
   return (
     <div className="row">
       {items.map(item => (
@@ -44,9 +43,6 @@ const ItemList = ({ items, onDelete, onPurchased, total }: ItemListProps) => {
           </div>
         </div>
       ))}
-      <div className="col-12 mt-4">
-        <h4>Total: ${total.toFixed(2)}</h4>
-      </div>
     </div>
   );
 };
