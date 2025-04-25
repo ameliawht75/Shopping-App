@@ -15,7 +15,7 @@ interface Props {
   deleteItem: (id: number) => void; //Delete function reciever
 }
 
-function ItemCard({ item, deleteItem }: Props) {//Leftovers from when I got ahead on project.  Going to leave since they don't hurt anything and may be used later.
+function ItemCard({ item }: Props) {//Leftovers from when I got ahead on project.  Going to leave since they don't hurt anything and may be used later.
   return (
     <div className="card mb-3">
       <div className="card-body">

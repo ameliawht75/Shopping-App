@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 
-type item = { //Kept getting an error when I used Item so put this in and it resolved.
+type item = { //Kept getting an error when I used Item so put this in and it seemed to resolve.
   id: string;
   name: string;
   price: number;
