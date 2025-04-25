@@ -1,10 +1,10 @@
 //Would like to return to list format that I had last week.
 //Try to get this to sort based on category of product (produce, dairy, etc.)
 
-import { items } from '../data'; //Has a red line but still works.
+import { item } from '../data'; //Has a red line but still works.
 
 interface ItemListProps {
-  items: item[];
+  items: typeof item;
   onDelete: (id: number) => void;
   onPurchased: (id: number) => void;
 }

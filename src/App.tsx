@@ -1,21 +1,20 @@
 import { useState } from 'react';
-import { items as testItems } from './data'; //Red line but will works.
+import { item as testItems } from './data';
 import ItemList from './components/ItemList';
 import Sidebar from './components/Sidebar';
-import CartSummary from './components/CartSummary'; //Yellow but still works.
+import CartSummary from './components/CartSummary';
 import { Item } from './components/ItemCard';
+import "./App.css";
 
 function App() {
   const [items, setItems] = useState<Item[]>(testItems);
-  const [editingItem, setEditingItem] = useState<Item | null>(null);
 
-  function handleSubmit(data: Omit<Item, 'id' | 'purchased'>, editingId?: number) {
+  const handleSubmit = (data: Omit<Item, 'id' | 'purchased'>, editingId?: number) => {
     if (editingId) {
       const updated = items.map(item =>
         item.id === editingId ? { ...item, ...data } : item
       );
       setItems(updated);
-      setEditingItem(null);
     } else {
       const newItem: Item = {
         id: Date.now(),
@@ -26,37 +25,34 @@ function App() {
       };
       setItems([...items, newItem]);
     }
-  }
+  };
 
-  function deleteItem(id: number) {
+  const deleteItem = (id: number) => {
     setItems(items.filter(item => item.id !== id));
-  }
+  };
 
-  function onPurchased(id: number) {
+  const onPurchased = (id: number) => {
     const updated = items.map(item =>
       item.id === id ? { ...item, purchased: !item.purchased } : item
     );
     setItems(updated);
-  }
-
-  /*function startEditing(item: Item) {
-    setEditingItem(item);
-  }*/
+  };
 
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <div style={{ display: 'flex' }}>
-      <Sidebar onSubmit={handleSubmit} editingItem={editingItem} />
-      <div style={{ padding: '1rem' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '250px' }}>
+        <Sidebar onSubmit={handleSubmit} />
+        <CartSummary total={total} />
+      </div>
+      <div style={{ padding: '1rem', flex: 1 }}>
         <h2>Grocery List</h2>
         <ItemList
           items={items}
           onDelete={deleteItem}
           onPurchased={onPurchased}
-          //onEdit={startEditing}
-          />
-        <CartSummary total={total}/>
+        />
       </div>
     </div>
   );

@@ -1,68 +1,67 @@
 //Creates a sidebar for adding and editing items
-//Would like to make it so sidebar changes color based on adding or editing items.
 //Another future idea is to add the category of the item so they can be filtered.
 
-//import Item from './ItemCard'; Tried this alone and it didn't work.
+import { useState } from 'react';
 
-import { useState, useEffect } from 'react';
-import Item from '../data';
-
-type SidebarProps = {
-  onSubmit: (data: Omit<Item, 'id' | 'purchased'>, editingId?: number) => void;
-  editingItem?: Item | null;
+type item = { //Kept getting an error when I used Item so put this in and it resolved.
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  purchased: boolean;
 };
 
-function Sidebar({ onSubmit, editingItem }: SidebarProps) {
-  const [name, setName] = useState('');
+type SidebarProps = {
+  onSubmit: (data: Omit<item, 'id' | 'purchased'>) => void;
+};
+
+function Sidebar({ onSubmit }: SidebarProps) {
+  const [name, setProduct] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
 
-  useEffect(() => {
-    if (editingItem) {
-      setName(editingItem.name);
-      setPrice(editingItem.price.toString());
-      setQuantity(editingItem.quantity.toString());
-    } else {
-      setName('');
-      setPrice('');
-      setQuantity('');
-    }
-  }, [editingItem]);
-
-  function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const itemData = {
-      name: name,
+      name: name.trim(),
       price: parseFloat(price),
-      quantity: parseInt(quantity),
+      quantity: parseInt(quantity, 10),
     };
 
-    onSubmit(itemData, editingItem?.id);
+    if (!itemData.name || isNaN(itemData.price) || isNaN(itemData.quantity)) {
+      alert('Please fill out all fields with valid values.');
+      return;
+    }
 
-    setName('');
+    onSubmit(itemData);
+
+    setProduct('');
     setPrice('');
     setQuantity('');
-  }
+  };
 
   return (
-    <div style={{ width: '250px', padding: '1rem', background: '#f0f0f0' }}>
-      <h3>{editingItem ? 'Edit Item' : 'Add Item'}</h3>
+    <div className = "sidebar">
+      <h3>{'Add Item'}</h3>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Name:</label>
+          <label>Item:</label>
           <input
             type="text"
             value={name}
-            onChange={e => setName(e.target.value)}
+            onChange={e => setProduct(e.target.value)}
+            required
           />
         </div>
         <div>
           <label>Price:</label>
           <input
-            type="text"
+            type="number"
+            step="0.01"
             value={price}
             onChange={e => setPrice(e.target.value)}
+            required
           />
         </div>
         <div>
@@ -71,9 +70,10 @@ function Sidebar({ onSubmit, editingItem }: SidebarProps) {
             type="number"
             value={quantity}
             onChange={e => setQuantity(e.target.value)}
+            required
           />
         </div>
-        <button type="submit">{editingItem ? 'Update' : 'Add'}</button>
+        <button type="submit">{'Add'}</button>
       </form>
     </div>
   );
